@@ -58,12 +58,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let contactCell = contactTableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath)
+        let fullName = (data[indexPath.row].lastName ?? "") + " " + (data[indexPath.row].firstName ?? "")
+        contactCell.textLabel?.text = fullName
         
-        let contactKey = contactSectionTitle[indexPath.section]
-        if let contactValues = contactDictionary[contactKey]{
-//            let fullName = (data[indexPath.row].lastName ?? "") + " " + (data[indexPath.row].firstName ?? "")
-            contactCell.textLabel?.text = contactValues[indexPath.row]
-        }
         
         return contactCell
     }
