@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BF2D08A92369245A00B40EBB /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF2D08A82369245A00B40EBB /* View.xib */; };
+		BF2D08E723699F6900B40EBB /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2D08E623699F6900B40EBB /* AddContactViewController.swift */; };
 		BF37EAD22366F704001A3867 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37EAD12366F704001A3867 /* AppDelegate.swift */; };
 		BF37EAD42366F704001A3867 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37EAD32366F704001A3867 /* SceneDelegate.swift */; };
 		BF37EAD62366F704001A3867 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37EAD52366F704001A3867 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		BF2D08A82369245A00B40EBB /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
+		BF2D08E623699F6900B40EBB /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		BF37EACE2366F704001A3867 /* ContactApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF37EAD12366F704001A3867 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF37EAD32366F704001A3867 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				BFFA1EB02367D0670072A260 /* Person.swift */,
 				BFFA1EB22367DFDE0072A260 /* ContactViewController.swift */,
 				BF2D08A82369245A00B40EBB /* View.xib */,
+				BF2D08E623699F6900B40EBB /* AddContactViewController.swift */,
 			);
 			path = ContactApp;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				BF37EAD62366F704001A3867 /* ViewController.swift in Sources */,
 				BF37EAD22366F704001A3867 /* AppDelegate.swift in Sources */,
 				BFFA1EB12367D0670072A260 /* Person.swift in Sources */,
+				BF2D08E723699F6900B40EBB /* AddContactViewController.swift in Sources */,
 				BF37EAD42366F704001A3867 /* SceneDelegate.swift in Sources */,
 				BFFA1EB32367DFDE0072A260 /* ContactViewController.swift in Sources */,
 			);

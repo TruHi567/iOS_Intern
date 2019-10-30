@@ -11,6 +11,7 @@ import UIKit
 class ContactViewController: UIViewController{
  
     @IBOutlet weak var nameLabel: UILabel?
+    
     var contact : Person?
     var name: String?
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
