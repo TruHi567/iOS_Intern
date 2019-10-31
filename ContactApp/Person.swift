@@ -8,19 +8,52 @@
 
 import Foundation
 import UIKit
-struct Person {
-    let firstName: String?
-    let lastName: String?
-    let phoneNumber: String?
+import Contacts
+class Person {
+    let firstName: String
+    let lastName: String
+   // let phoneNumber: String?
     let email: String?
     let profilePicture: UIImage?
+    var phoneNumberField: (CNLabeledValue<CNPhoneNumber>)?
     
-    init(firstName: String?, lastName: String?, phoneNumber: String?, email: String?, profilePicture: UIImage?) {
+    init(firstName: String, lastName: String, email: String?, profilePicture: UIImage?) {
         self.firstName = firstName
         self.lastName = lastName
-        self.phoneNumber = phoneNumber
         self.email = email
         self.profilePicture = profilePicture
     }
     
+}
+
+extension Person {
+  var contactValue: CNContact {
+    let contact = CNMutableContact()
+    contact.givenName = firstName
+    contact.familyName = lastName
+    contact.emailAddresses = [CNLabeledValue(label: CNLabelWork, value: email! as NSString)]
+    if let profilePicture = profilePicture {
+      let imageData = profilePicture.jpegData(compressionQuality: 1)
+      contact.imageData = imageData
+    }
+    if let phoneNumberField = phoneNumberField {
+      contact.phoneNumbers.append(phoneNumberField)
+    }
+    return contact.copy() as! CNContact
+  }
+  
+  convenience init?(contact: CNContact) {
+    guard let email = contact.emailAddresses.first else { return nil }
+    let firstName = contact.givenName
+    let lastName = contact.familyName
+    let workEmail = email.value as String
+    var profilePicture: UIImage?
+    if let imageData = contact.imageData {
+      profilePicture = UIImage(data: imageData)
+    }
+    self.init(firstName: firstName, lastName: lastName, email: workEmail, profilePicture: profilePicture)
+    if let contactPhone = contact.phoneNumbers.first {
+      phoneNumberField = contactPhone
+    }
+  }
 }

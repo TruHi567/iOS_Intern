@@ -54,7 +54,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="gqp-k6-esg" kind="show" identifier="MainToDetail" id="Kdm-OU-rIG"/>
+                                            <segue destination="gqp-k6-esg" kind="show" identifier="MainToDetail" id="0h0-EQ-OCZ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -93,13 +93,13 @@
         <!--Contact View Controller-->
         <scene sceneID="lz8-Z3-Im8">
             <objects>
-                <viewController id="gqp-k6-esg" customClass="ContactViewController" customModule="ContactApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactView" id="gqp-k6-esg" customClass="ContactViewController" customModule="ContactApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4wj-vn-YqX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3x-KI-ras">
-                                <rect key="frame" x="20" y="292" width="374" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3x-KI-ras">
+                                <rect key="frame" x="20" y="437.5" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -112,7 +112,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="JJh-Pj-qAw" firstAttribute="trailing" secondItem="k3x-KI-ras" secondAttribute="trailing" constant="20" id="1l2-2v-KeB"/>
+                            <constraint firstItem="k3x-KI-ras" firstAttribute="centerY" secondItem="4wj-vn-YqX" secondAttribute="centerY" id="fER-fa-iDn"/>
                             <constraint firstItem="k3x-KI-ras" firstAttribute="leading" secondItem="JJh-Pj-qAw" secondAttribute="leading" constant="20" id="qia-BT-7bR"/>
+                            <constraint firstItem="k3x-KI-ras" firstAttribute="centerX" secondItem="4wj-vn-YqX" secondAttribute="centerX" id="tkV-1f-mYv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JJh-Pj-qAw"/>
                     </view>

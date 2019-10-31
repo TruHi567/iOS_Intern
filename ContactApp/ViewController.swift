@@ -7,14 +7,17 @@
 //
 
 import UIKit
-let data: [Person] = [ Person(firstName: "An", lastName: "Bui", phoneNumber: "0981228431", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Hieu", lastName: "Bui", phoneNumber: "0981228431", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Anh", lastName: "Bui", phoneNumber: "0981228431", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Cuong", lastName: "Nguyen", phoneNumber: "0981228431", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Binh", lastName: "Le", phoneNumber: "0981228431", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Duy", lastName: "Tran", phoneNumber: "0981228431", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Hai", lastName: "Nguyen", phoneNumber: "0981228431", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Phong", lastName: "Bui", phoneNumber: "0981228431", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: ""))]
+import ContactsUI
+import Contacts
+
+let data: [Person] = [ Person(firstName: "An", lastName: "Nguyen", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
+Person(firstName: "Hieu", lastName: "Bui", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
+Person(firstName: "Anh", lastName: "Hoang",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
+Person(firstName: "Cuong", lastName: "Nguyen", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
+Person(firstName: "Binh", lastName: "Le",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
+Person(firstName: "Duy", lastName: "Tran",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
+Person(firstName: "Hai", lastName: "Nguyen",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
+Person(firstName: "Phong", lastName: "Bui",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: ""))]
 
 
 
@@ -27,23 +30,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var contactTableView: UITableView!
     @IBOutlet weak var searchBar: UITableView!
     
-    var contactDictionary = [String:[String]]()
+    var contactDictionary = [String:[Person]]()
     var contactSectionTitle = [String]()
     var contact: Person?
     var delegate: selectedContactDelegate?
-    var currentContact = data
+    var currentContact: [Person] = []
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        currentContact = data
         for contact in currentContact {
-            let contactKey = String((contact.firstName?.prefix(1) ?? ""))
+            let contactKey = String((contact.firstName.prefix(1) ))
             if var contactValues = contactDictionary[contactKey] {
-                contactValues.append(contact.firstName ?? "")
+                contactValues.append(contact)
                 contactDictionary[contactKey] = contactValues
             } else {
-                contactDictionary[contactKey] = [(contact.firstName ?? "")]
+                contactDictionary[contactKey] = [(contact)]
             }
         }
         contactSectionTitle = [String](contactDictionary.keys)
@@ -73,15 +77,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let contactKey = contactSectionTitle[indexPath.section]
         if let contactValues = contactDictionary[contactKey]{
-//            let fullName = (data[indexPath.row].lastName ?? "") + " " + contactValues[indexPath.row]
-            contactCell.textLabel?.text = contactValues[indexPath.row]
+            let fullName = (contactValues[indexPath.row].lastName ) + " " + (contactValues[indexPath.row].firstName )
+            
+            contactCell.textLabel?.text = fullName
         }
         return contactCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        contact = data[indexPath.row]
-        delegate?.tranferContact(with: contact! )
+        var contactSelected: Person
+        let contactKey = contactSectionTitle[indexPath.section]
+        if let contactValues = contactDictionary[contactKey]{
+            
+            
+            let person = contactValues[indexPath.row]
+            let contact = person.contactValue
+            contactTableView .deselectRow(at: indexPath, animated: true)
+            let contactViewController = CNContactViewController(forUnknownContact: contact)
+            contactViewController.hidesBottomBarWhenPushed = true
+            contactViewController.allowsEditing = false
+            contactViewController.allowsActions = false
+            navigationController?.pushViewController(contactViewController, animated: true)
+            
+            
+            contactSelected = contactValues[indexPath.row]
+            print(contactSelected.firstName)
+            if delegate != nil{
+                delegate?.tranferContact(with: contactSelected)
+                navigationController?.dismiss(animated: true)
+                print("Gui")
+            }
+        }
+        
+        
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -93,10 +121,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     // Search Bar
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         currentContact = data.filter({ person -> Bool in
             guard let text = searchBar.text else {return false}
-            return (person.firstName?.contains(text))!
+            return (person.firstName.contains(text))
         })
         print(currentContact.count)
         contactTableView.reloadData()
@@ -106,14 +135,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    //Delagate
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "MainToDetail" {
-            let contactViewController = segue.destination as! ContactViewController
-            contactViewController.contact = contact
-            print("Gui")
-        }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
     }
     
+    //segue
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "MainToDetail" {
+//            let contactViewController = segue.destination as! ContactViewController
+//            contactViewController.contact = contact
+//            print("Gui")
+//        }
+//    }
+    
+}
+extension ViewController : UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
 }
 
