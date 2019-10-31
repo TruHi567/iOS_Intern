@@ -8,8 +8,9 @@
 
 import UIKit
 
-class AddContactViewController: UIViewController {
+class AddContactViewController: UITableViewController {
 
+    @IBOutlet weak var addTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 

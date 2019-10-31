@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF2C8439236AD95500416F43 /* AddContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2C8438236AD95500416F43 /* AddContact.swift */; };
 		BF2D08A92369245A00B40EBB /* View.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF2D08A82369245A00B40EBB /* View.xib */; };
 		BF2D08E723699F6900B40EBB /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2D08E623699F6900B40EBB /* AddContactViewController.swift */; };
 		BF37EAD22366F704001A3867 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37EAD12366F704001A3867 /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF2C8438236AD95500416F43 /* AddContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContact.swift; sourceTree = "<group>"; };
 		BF2D08A82369245A00B40EBB /* View.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = View.xib; sourceTree = "<group>"; };
 		BF2D08E623699F6900B40EBB /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		BF37EACE2366F704001A3867 /* ContactApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +120,7 @@
 				BFFA1EB22367DFDE0072A260 /* ContactViewController.swift */,
 				BF2D08A82369245A00B40EBB /* View.xib */,
 				BF2D08E623699F6900B40EBB /* AddContactViewController.swift */,
+				BF2C8438236AD95500416F43 /* AddContact.swift */,
 			);
 			path = ContactApp;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF37EAD62366F704001A3867 /* ViewController.swift in Sources */,
+				BF2C8439236AD95500416F43 /* AddContact.swift in Sources */,
 				BF37EAD22366F704001A3867 /* AppDelegate.swift in Sources */,
 				BFFA1EB12367D0670072A260 /* Person.swift in Sources */,
 				BF2D08E723699F6900B40EBB /* AddContactViewController.swift in Sources */,
