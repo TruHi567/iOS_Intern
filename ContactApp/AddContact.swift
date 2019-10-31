@@ -13,4 +13,9 @@ class AddContact: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    @IBAction func btnCancelClicked(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }

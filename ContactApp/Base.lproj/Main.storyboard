@@ -136,7 +136,7 @@
             <objects>
                 <tableViewController id="WC0-Ld-AJi" customClass="AddContact" customModule="ContactApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="SYg-C5-jL2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="2000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
@@ -581,10 +581,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="New Contact" id="xzk-2u-C0K">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wiq-uh-lU0"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wiq-uh-lU0">
+                            <connections>
+                                <action selector="btnCancelClicked:" destination="WC0-Ld-AJi" id="JMR-EF-44e"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="3B9-GY-fen"/>
                     </navigationItem>
-                    <size key="freeformSize" width="414" height="2000"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ih8-0L-a8E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
