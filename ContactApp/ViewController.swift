@@ -100,24 +100,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return contactCell
     }
     
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return indexPath
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var contactSelected: Person
         let contactKey = contactSectionTitle[indexPath.section]
         if let contactValues = contactDictionary[contactKey]{
             
-            
-            let person = contactValues[indexPath.row]
-            let contact = person.contactValue
-            contactTableView .deselectRow(at: indexPath, animated: true)
-            let contactViewController = CNContactViewController(forUnknownContact: contact)
-            contactViewController.hidesBottomBarWhenPushed = true
-            contactViewController.allowsEditing = false
-            contactViewController.allowsActions = false
-            navigationController?.pushViewController(contactViewController, animated: true)
-            
-            
             contactSelected = contactValues[indexPath.row]
+            contact = contactSelected
             print(contactSelected.firstName)
+           
             if delegate != nil{
                 delegate?.tranferContact(with: contactSelected)
                 navigationController?.dismiss(animated: true)
@@ -147,7 +142,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         currentContact = data.filter({ person -> Bool in
             guard let text = searchBar.text?.lowercased() else {return false}
-            return (person.firstName.lowercased().contains(text))
+            return (person.firstName.lowercased().contains(text) || person.lastName.lowercased().contains(text))
         })
         print(currentContact.count)
         for index in currentContact{
@@ -157,14 +152,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     //segue
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "MainToDetail" {
-//            let contactViewController = segue.destination as! ContactViewController
-//            contactViewController.contact = contact
-//            print("Gui")
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "MainToDetail" {
+            let contactViewController = segue.destination as! ContactViewController
+            contactViewController.contact = contact
+            contactViewController.delegate = self as? selectedContactDelegate
+            print(contact?.firstName ?? "NoOne")
+            print("Gui")
+        }
+    }
     
+}
+
+// MARK: - CustomTableViewCellDelegate
+extension ViewController: AddButtonCellDelegate {
+
+    func cell(cell: UITableViewCell?, touchButtonAt indexPath: IndexPath?) {
+        print("touch buton at indexpath \(indexPath)")
+    }
 }
 
 
