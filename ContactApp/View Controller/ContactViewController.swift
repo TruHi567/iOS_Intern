@@ -8,7 +8,11 @@
 
 import UIKit
 
-class ContactViewController: UIViewController, selectedContactDelegate{
+protocol SendBackEditedContactDelegate {
+    func sendBackEditedContact(contact: Person);
+}
+
+class ContactViewController: UIViewController{
     
     enum contactSectionType{
         case phone
@@ -21,27 +25,51 @@ class ContactViewController: UIViewController, selectedContactDelegate{
     }
     var itemsContact = [contactSectionType](arrayLiteral: .phone, .email, .address, .birthday, .note, .sendMessage, .shareContact)
  
-    var delegate: selectedContactDelegate?
-    @IBOutlet weak var nameLabel: UILabel?
     
+    @IBOutlet weak var nameLabel: UILabel?
     @IBOutlet weak var tableView: UITableView!
+    
     var contact : Person?
     var name: String?
+    var delegate: SendBackEditedContactDelegate?
 
     func tranferContact(with contact: Person) {
             name = contact.firstName
             print("Nhan")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        nameLabel?.text = (contact?.lastName ?? "") + " " + (contact?.firstName ?? "")
+        tableView.reloadData()
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.backItem?.backBarButtonItem?.title = "Contacts"
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(DetailViewCell.nib, forCellReuseIdentifier: DetailViewCell.identifier)
         tableView.register(DetailImageViewCell.nib, forCellReuseIdentifier: DetailImageViewCell.identifier)
         tableView.register(NoteCell.nib, forCellReuseIdentifier: NoteCell.identifier)
         tableView.register(OneLineCell.nib, forCellReuseIdentifier: OneLineCell.identifier)
-        nameLabel?.text = contact?.firstName
+        
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if self.isMovingFromParent{
+            delegate?.sendBackEditedContact(contact: contact!)
+            print("SendBack")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DetailToEdit"{
+            let ecvc = segue.destination as? EditContactViewController
+            ecvc?.contact = contact
+        }
     }
 }
 
@@ -63,12 +91,15 @@ extension ContactViewController: UITableViewDataSource {
         
         case .phone:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailViewCell.identifier, for: indexPath) as! DetailViewCell
+            cell.detailLabel.text = contact?.phoneNumber
             return cell
         case .email:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailViewCell.identifier, for: indexPath) as! DetailViewCell
+            cell.detailLabel.text = contact?.email
             return cell
         case .address:
             let cell = tableView.dequeueReusableCell(withIdentifier: DetailImageViewCell.identifier, for: indexPath) as! DetailImageViewCell
+            cell.detailLabel.text = "Address"
             return cell
         case .birthday:
              let cell = tableView.dequeueReusableCell(withIdentifier: DetailViewCell.identifier, for: indexPath) as! DetailViewCell
@@ -85,8 +116,20 @@ extension ContactViewController: UITableViewDataSource {
             cell.titleLabel.text = "Share Contact"
             return cell
         }
+        
+     
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.isSelected = false
+    }
+}
+
+extension ContactViewController: SendEditedContactDelegate{
+    func sendEditedContact(contact: Person) {
+        self.contact = contact
+        tableView.reloadData()
+    }
     
 }
 

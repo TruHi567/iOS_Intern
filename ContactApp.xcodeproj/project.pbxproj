@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF03C01B237B9D0F00F03FAF /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03C01A237B9D0F00F03FAF /* EditContactViewController.swift */; };
 		BF37EAD22366F704001A3867 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37EAD12366F704001A3867 /* AppDelegate.swift */; };
 		BF37EAD42366F704001A3867 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37EAD32366F704001A3867 /* SceneDelegate.swift */; };
 		BF37EAD62366F704001A3867 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37EAD52366F704001A3867 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 		BF37EAF42366F705001A3867 /* ContactAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF37EAF32366F705001A3867 /* ContactAppUITests.swift */; };
 		BF6AE7AC2373C65A005A0F15 /* AddDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6AE7AA2373C65A005A0F15 /* AddDetailCell.swift */; };
 		BF6AE7AD2373C65A005A0F15 /* AddDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF6AE7AB2373C65A005A0F15 /* AddDetailCell.xib */; };
+		BF7962A22383A9C8008245E2 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BF7962A12383A9C8008245E2 /* data.json */; };
 		BF80D7D12372614500BEE684 /* NameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF80D7CF2372614500BEE684 /* NameCell.swift */; };
 		BF80D7D22372614500BEE684 /* NameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF80D7D02372614500BEE684 /* NameCell.xib */; };
 		BF80D7D52372620300BEE684 /* AddPhoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF80D7D32372620300BEE684 /* AddPhoneCell.swift */; };
@@ -57,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF03C01A237B9D0F00F03FAF /* EditContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
 		BF37EACE2366F704001A3867 /* ContactApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF37EAD12366F704001A3867 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF37EAD32366F704001A3867 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +76,7 @@
 		BF37EAF52366F705001A3867 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF6AE7AA2373C65A005A0F15 /* AddDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailCell.swift; sourceTree = "<group>"; };
 		BF6AE7AB2373C65A005A0F15 /* AddDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddDetailCell.xib; sourceTree = "<group>"; };
+		BF7962A12383A9C8008245E2 /* data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		BF80D7CF2372614500BEE684 /* NameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCell.swift; sourceTree = "<group>"; };
 		BF80D7D02372614500BEE684 /* NameCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NameCell.xib; sourceTree = "<group>"; };
 		BF80D7D32372620300BEE684 /* AddPhoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhoneCell.swift; sourceTree = "<group>"; };
@@ -81,7 +85,7 @@
 		BF80D7D923726BF900BEE684 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		BF80D7DF23726ED400BEE684 /* RingToneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingToneCell.swift; sourceTree = "<group>"; };
 		BF80D7E023726ED400BEE684 /* RingToneCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RingToneCell.xib; sourceTree = "<group>"; };
-		BF80D8342372A76B00BEE684 /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddContactViewController.swift; path = "Table View Cell/AddContactViewController.swift"; sourceTree = "<group>"; };
+		BF80D8342372A76B00BEE684 /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		BF80D8362372AF3800BEE684 /* DetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCell.swift; sourceTree = "<group>"; };
 		BF80D8372372AF3800BEE684 /* DetailViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewCell.xib; sourceTree = "<group>"; };
 		BF80D83A2372B29600BEE684 /* DetailImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageViewCell.swift; sourceTree = "<group>"; };
@@ -120,6 +124,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF03C01C237B9D2F00F03FAF /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				BF37EAD52366F704001A3867 /* ViewController.swift */,
+				BFB76608236BD24B001399F4 /* GroupsTableViewController.swift */,
+				BF03C01A237B9D0F00F03FAF /* EditContactViewController.swift */,
+				BFFA1EB22367DFDE0072A260 /* ContactViewController.swift */,
+				BF80D8342372A76B00BEE684 /* AddContactViewController.swift */,
+			);
+			path = "View Controller";
+			sourceTree = "<group>";
+		};
 		BF37EAC52366F704001A3867 = {
 			isa = PBXGroup;
 			children = (
@@ -144,19 +160,17 @@
 			isa = PBXGroup;
 			children = (
 				BF80D7CE2372610900BEE684 /* Table View Cell */,
+				BF03C01C237B9D2F00F03FAF /* View Controller */,
 				BF37EAD12366F704001A3867 /* AppDelegate.swift */,
 				BF37EAD32366F704001A3867 /* SceneDelegate.swift */,
-				BF37EAD52366F704001A3867 /* ViewController.swift */,
 				BF37EAD72366F704001A3867 /* Main.storyboard */,
 				BF37EADA2366F705001A3867 /* Assets.xcassets */,
 				BF37EADC2366F705001A3867 /* LaunchScreen.storyboard */,
 				BF37EADF2366F705001A3867 /* Info.plist */,
 				BFFA1EB02367D0670072A260 /* Person.swift */,
-				BF80D8342372A76B00BEE684 /* AddContactViewController.swift */,
-				BFFA1EB22367DFDE0072A260 /* ContactViewController.swift */,
-				BFB76608236BD24B001399F4 /* GroupsTableViewController.swift */,
 				BF80D7D72372642F00BEE684 /* ProfileModel.swift */,
 				BF80D7D923726BF900BEE684 /* ProfileViewModel.swift */,
+				BF7962A12383A9C8008245E2 /* data.json */,
 			);
 			path = ContactApp;
 			sourceTree = "<group>";
@@ -316,6 +330,7 @@
 				BF80D8412372B94C00BEE684 /* NoteCell.xib in Resources */,
 				BF37EAD92366F704001A3867 /* Main.storyboard in Resources */,
 				BF80D7D62372620300BEE684 /* AddPhoneCell.xib in Resources */,
+				BF7962A22383A9C8008245E2 /* data.json in Resources */,
 				BF80D7E223726ED400BEE684 /* RingToneCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,6 +361,7 @@
 				BF80D7D12372614500BEE684 /* NameCell.swift in Sources */,
 				BF80D7D82372642F00BEE684 /* ProfileModel.swift in Sources */,
 				BF37EAD62366F704001A3867 /* ViewController.swift in Sources */,
+				BF03C01B237B9D0F00F03FAF /* EditContactViewController.swift in Sources */,
 				BFB76609236BD24B001399F4 /* GroupsTableViewController.swift in Sources */,
 				BF80D7DA23726BF900BEE684 /* ProfileViewModel.swift in Sources */,
 				BF80D8442372BA8900BEE684 /* OneLineCell.swift in Sources */,

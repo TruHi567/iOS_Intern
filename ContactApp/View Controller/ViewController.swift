@@ -10,42 +10,66 @@ import UIKit
 import ContactsUI
 import Contacts
 
-let data: [Person] = [ Person(firstName: "An", lastName: "Nguyen", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Hieu", lastName: "Bui", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Anh", lastName: "Hoang",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Cuong", lastName: "Nguyen", email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Binh", lastName: "Le",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Duy", lastName: "Tran",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Hai", lastName: "Nguyen",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: "")),
-Person(firstName: "Phong", lastName: "Bui",  email: "hieu.bui@savvycomsoftware.com", profilePicture: UIImage(named: ""))]
-
-
-
-protocol selectedContactDelegate: class {
-    func tranferContact(with contact: Person)
-}
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
     
     @IBOutlet weak var contactTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-   
-     
+    
     var contactDictionary = [String:[Person]]()
     var contactSectionTitle = [String]()
     var contact: Person?
-    var delegate: selectedContactDelegate?
-    var currentContact: [Person] = []
+    var data = [Person](){
+        didSet {
+            DispatchQueue.main.async {
+                self.contactTableView.reloadData()
+            }
+        }
+    }
+    var contacts = [Person](){
+        didSet {
+            DispatchQueue.main.async {
+                self.contactTableView.reloadData()
+            }
+        }
+    }
+    var selectedItemIndexPath: IndexPath?
+
     
     var isSearchBarEmpty: Bool {
       return searchBar.text?.isEmpty ?? true
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        currentContact = data
-        for contact in data {
-            let contactKey = String((contact.firstName.prefix(1) ))
+    var dataContact: [Person]? = []
+    var currentContact : [Person]? = []
+    
+    
+    //MARK: Load Data
+    func loadDataSource(){
+        let contactDecoder = JSONDecoder()
+        do {
+            guard let url = Bundle.main.url(forResource: "data", withExtension: "json")  else {
+                return
+            }
+            guard let contactJSONData = try? Data(contentsOf: url) else {
+                return
+            }
+            
+            let dataContact = try contactDecoder.decode([Person].self, from: contactJSONData)
+            self.data = dataContact
+            
+            
+        } catch {
+            print("Failed to decode contacts: \(error.localizedDescription)")
+        }
+        contactTableView.reloadData()
+    }
+    
+    func loadData(){
+        contacts = data
+        dataContact = contacts
+        for contact in dataContact! {
+            let contactKey = String((contact.firstName.prefix(1).uppercased()))
             if var contactValues = contactDictionary[contactKey] {
                 contactValues.append(contact)
                 contactDictionary[contactKey] = contactValues
@@ -55,18 +79,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         contactSectionTitle = [String](contactDictionary.keys)
         contactSectionTitle = contactSectionTitle.sorted(by: {$0 < $1})
+        contactTableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        contacts.removeAll()
+        dataContact?.removeAll()
+        contactTableView.reloadData()
+       
         
+    }
+   
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadDataSource()
+        loadData()
         contactTableView.delegate = self
         contactTableView.dataSource = self
         searchBar.delegate = self
-        
-        // Do any additional setup after loading the view.
     }
     
-    //Table View
+    //MARK: Table View
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         if !isSearchBarEmpty {
-            return currentContact.count
+            return currentContact!.count
         } else {
             let contactKey = contactSectionTitle[section]
             if let contactValues = contactDictionary[contactKey]{
@@ -87,7 +126,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let contactCell = contactTableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath)
         var fullName = ""
         if !isSearchBarEmpty {
-            fullName = currentContact[indexPath.row].lastName + " " + currentContact[indexPath.row].firstName
+            fullName = currentContact![indexPath.row].lastName + " " + currentContact![indexPath.row].firstName
             contactCell.textLabel?.text = fullName
         } else {
             let contactKey = contactSectionTitle[indexPath.section]
@@ -101,26 +140,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        selectedItemIndexPath = indexPath
         return indexPath
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var contactSelected: Person
-        let contactKey = contactSectionTitle[indexPath.section]
-        if let contactValues = contactDictionary[contactKey]{
-            
-            contactSelected = contactValues[indexPath.row]
-            contact = contactSelected
-            print(contactSelected.firstName)
-           
-            if delegate != nil{
-                delegate?.tranferContact(with: contactSelected)
-                navigationController?.dismiss(animated: true)
-                print("Gui")
-            }
-        }
-        
-        
+        contactTableView.cellForRow(at: indexPath)?.isSelected = false
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -137,38 +162,58 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return contactSectionTitle
     }
     
-    // Search Bar
+
+    
+    //MARK: Search Bar
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         currentContact = data.filter({ person -> Bool in
             guard let text = searchBar.text?.lowercased() else {return false}
             return (person.firstName.lowercased().contains(text) || person.lastName.lowercased().contains(text))
         })
-        print(currentContact.count)
-        for index in currentContact{
-            print(index.firstName)
-        }
         contactTableView.reloadData()
     }
     
     //segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "MainToDetail" {
-            let contactViewController = segue.destination as! ContactViewController
-            contactViewController.contact = contact
-            contactViewController.delegate = self as? selectedContactDelegate
-            print(contact?.firstName ?? "NoOne")
-            print("Gui")
+        
+        if let destination = segue.destination as? UINavigationController,
+            let avc = destination.topViewController as? AddContactViewController{
+            avc.delegate = self
+        }
+        
+        if segue.identifier == "MainToDetail"{
+            if let cvc = segue.destination as? ContactViewController{
+                var contactSelected: Person
+                if let index = selectedItemIndexPath {
+                    if(!isSearchBarEmpty){
+                        contactSelected = currentContact![index.row]
+                        cvc.contact = contactSelected
+                    } else {
+                        let contactKey = contactSectionTitle[index.section]
+                        if let contactValues = contactDictionary[contactKey]{
+                            contactSelected = contactValues[index.row]
+                            cvc.contact = contactSelected
+                        }
+                    }
+                }
+            }
         }
     }
     
 }
 
-// MARK: - CustomTableViewCellDelegate
-extension ViewController: AddButtonCellDelegate {
+//MARK: Delegate
+extension ViewController: AddContactDelegate {
+    func addContact(person: Person) {
+        contacts.removeAll()
+        data.append(person)
+        loadData()
+    }
+}
 
-    func cell(cell: UITableViewCell?, touchButtonAt indexPath: IndexPath?) {
-        print("touch buton at indexpath \(indexPath)")
+extension ViewController: SendBackEditedContactDelegate {
+    func sendBackEditedContact(contact: Person) {
     }
 }
 
