@@ -26,13 +26,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-    var contacts = [Person](){
-        didSet {
-            DispatchQueue.main.async {
-                self.contactTableView.reloadData()
-            }
-        }
-    }
     var selectedItemIndexPath: IndexPath?
 
     
@@ -40,7 +33,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       return searchBar.text?.isEmpty ?? true
     }
     
-    var dataContact: [Person]? = []
+    var dataContact = [Person](){
+        didSet {
+            DispatchQueue.main.async {
+                self.contactTableView.reloadData()
+            }
+        }
+    }
     var currentContact : [Person]? = []
     
     
@@ -66,9 +65,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func loadData(){
-        contacts = data
-        dataContact = contacts
-        for contact in dataContact! {
+        dataContact = data
+        //data.removeAll()
+        
+        for contact in dataContact {
             let contactKey = String((contact.firstName.prefix(1).uppercased()))
             if var contactValues = contactDictionary[contactKey] {
                 contactValues.append(contact)
@@ -84,8 +84,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        contacts.removeAll()
-        dataContact?.removeAll()
+        dataContact.removeAll()
         contactTableView.reloadData()
        
         
@@ -206,7 +205,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //MARK: Delegate
 extension ViewController: AddContactDelegate {
     func addContact(person: Person) {
-        contacts.removeAll()
         data.append(person)
         loadData()
     }
